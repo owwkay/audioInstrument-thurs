@@ -1,0 +1,49 @@
+@import url(https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap);
+
+/*saving our custom variables*/
+:root {
+    --color-01: lightgreen;
+    --color-02: darkgreen;
+    --color-03: skyblue;
+    --color-04: darkblue;
+    --border: 0.5rem inset var(--color-02);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+    --color-01: darkgreen;
+    --color-02: lightgreen;
+    --color-03: darkblue;
+    --color-04: skyblue;
+    }
+}
+
+
+body {
+    font-family: 'Fragment Mono', monospace;
+    background-color: var(--color-01);
+    color: var(--color-02);
+}
+
+dialog[open] {
+    background-color: var(--colour-02);
+    color: var(--colour-01);
+    border: var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    border: var(--border);
+}
+
+.whiteKey {
+    cursor: pointer;
+}
+.whiteKey:hover {
+    background-color: coral;
+}
+.whiteKey:active {
+    background-color: red;
+}
