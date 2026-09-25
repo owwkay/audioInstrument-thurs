@@ -15,18 +15,40 @@
 </head>
 <body>
     <dialog id="intro-modal">
-        boi ts website gna make sum sound dont say i didnt warn ya buddy!
-        <button id="intro-modal-close">ok</button>
+        Make sure to adjust your volume settings before playing the synthesiser!
+        <button id="intro-modal-close">Okay, continue!</button>
     </dialog>
 
     <header>
-        <h1>Audio Instrument</h1>
+        <h1>RandomSynth</h1>
     </header>
 
     <main>
-        <button id="test-button" class="whiteKey" data-note="C4">make sound</button>
-        <button id="key-test" class="whiteKey" data-note="D4">key</button>
+    <h3> Notes </h3>
+        <button id="C4" class="whiteKey" data-note="C4">C4</button>
+        <button id="D4" class="whiteKey" data-note="D4">D4</button>
+        <button id="E4" class="whiteKey" data-note="E4">E4</button>
+        <button id="G4" class="whiteKey" data-note="G4">G4</button>
+
+         <!-- random values button -->
+        <button id ="random-values" class="whiteKey">Give me something to work with!</button>
+
+    <h3> Volume</h3>
+        <div class="slidecontainer"> <!--Slider element = https://www.w3schools.com/howto/howto_js_rangeslider.asp-->
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        </div>
+
+    <div class="dropdown"> <!-- https://www.w3schools.com/css/css_dropdowns_advanced.asp -->
+        <button class="dropbtn">Oscillator</button>
+            <div class="dropdown-content">
+                <a href="#">Saw wave</a>
+                <a href="#">Square wave</a>
+                <a href="#">Sine wave</a>
+                <a href="#">Triangle wave</a>
+            </div>
+    </div>
+
     </main>
+           
 
 </body>
-</html>

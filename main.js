@@ -1,9 +1,11 @@
 
 // document.body.style.backgroundColor = "red";
-// find my test button
-const testButton = document.getElementById("test-button");
-// find my key test button
-const key = document.getElementById("key-test");
+// Getting all key elements by ID
+const C4 = document.getElementById("C4");
+const D4 = document.getElementById("D4");
+const E4 = document.getElementById("E4");
+const G4 = document.getElementById("G4");
+
 // find our intro modal
 const introModal = document.getElementById("intro-modal");
 // console.log(introModal);
@@ -62,8 +64,9 @@ function playNote(e){
     // play the note for the right amount of time
     // if mouse button is held previously play note
     if(e.buttons === 1){
-        synth.triggerAttack(note);
+        synth.triggerAttack(note,);
     }
+    console.log("shuffled");
 
 }
 
@@ -78,11 +81,46 @@ function endNote(e){
     synth.triggerRelease(note);
 }
 
-testButton.addEventListener("mousedown", playNote);
-testButton.addEventListener("mouseenter", playNote);
-testButton.addEventListener("mouseup", endNote);
-testButton.addEventListener("mouseleave", endNote);
-key.addEventListener("mousedown", playNote);
-key.addEventListener("mouseenter", playNote);
-key.addEventListener("mouseup", endNote);
-key.addEventListener("mouseleave", endNote);
+// add event listeners to each key
+C4.addEventListener("mousedown", playNote);
+C4.addEventListener("mouseenter", playNote);
+C4.addEventListener("mouseup", endNote);
+C4.addEventListener("mouseleave", endNote);
+
+D4.addEventListener("mousedown", playNote);
+D4.addEventListener("mouseenter", playNote);
+D4.addEventListener("mouseup", endNote);
+D4.addEventListener("mouseleave", endNote);
+
+E4.addEventListener("mousedown", playNote);
+E4.addEventListener("mouseenter", playNote);
+E4.addEventListener("mouseup", endNote);
+E4.addEventListener("mouseleave", endNote);
+
+G4.addEventListener("mousedown", playNote);
+G4.addEventListener("mouseenter", playNote);
+G4.addEventListener("mouseup", endNote);
+G4.addEventListener("mouseleave", endNote);
+
+playbackButton.addEventListener("click", playPauseAudio);
+
+// randomly scrub to location
+const randomButton = document.getElementById("random-location");
+
+// move playback to random position in audio file
+function randomLocation(){
+    // find duration
+    let trackLength = audioTrack.duration;
+    audioTrack.currentTime = trackLength * Math.random();
+}
+
+randomButton.addEventListener("click", randomLocation);
+
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
