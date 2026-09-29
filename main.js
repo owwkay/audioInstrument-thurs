@@ -4,7 +4,10 @@
 const C4 = document.getElementById("C4");
 const D4 = document.getElementById("D4");
 const E4 = document.getElementById("E4");
+const F4 = document.getElementById("F4");
 const G4 = document.getElementById("G4");
+const A4 = document.getElementById("A4");
+const B4 = document.getElementById("B4");
 
 // find our intro modal
 const introModal = document.getElementById("intro-modal");
@@ -48,6 +51,28 @@ introModal.addEventListener("close", toneInit);
 // create instrument
 // change to polysynth
 const synth = new Tone.PolySynth();
+
+// Volume slider
+const volumeSlider = document.getElementById("myRange");
+volumeSlider.addEventListener("input", function() {
+    synth.volume.value = this.value - 50;
+});
+
+// Pitch slider
+const pitchSlider = document.getElementById("pitchSlider");
+
+pitchSlider.addEventListener("input", function() {
+    synth.set({
+        detune: this.value * 100
+    });
+});
+
+// Filter slider
+const filterSlider = document.getElementById("filterSlider");
+
+filterSlider.addEventListener("input", function() {
+    filter.frequency.value = this.value;
+});
 
 function toneInit(){
     // connect synth to audio output
@@ -97,30 +122,44 @@ E4.addEventListener("mouseenter", playNote);
 E4.addEventListener("mouseup", endNote);
 E4.addEventListener("mouseleave", endNote);
 
+F4.addEventListener("mousedown", playNote);
+F4.addEventListener("mouseenter", playNote);
+F4.addEventListener("mouseup", endNote);
+F4.addEventListener("mouseleave", endNote);
+
 G4.addEventListener("mousedown", playNote);
 G4.addEventListener("mouseenter", playNote);
 G4.addEventListener("mouseup", endNote);
 G4.addEventListener("mouseleave", endNote);
 
-playbackButton.addEventListener("click", playPauseAudio);
+A4.addEventListener("mousedown", playNote);
+A4.addEventListener("mouseenter", playNote);
+A4.addEventListener("mouseup", endNote);
+A4.addEventListener("mouseleave", endNote);
 
-// randomly scrub to location
-const randomButton = document.getElementById("random-location");
+B4.addEventListener("mousedown", playNote);
+B4.addEventListener("mouseenter", playNote);
+B4.addEventListener("mouseup", endNote);
+B4.addEventListener("mouseleave", endNote);
 
-// move playback to random position in audio file
-function randomLocation(){
-    // find duration
-    let trackLength = audioTrack.duration;
-    audioTrack.currentTime = trackLength * Math.random();
-}
 
-randomButton.addEventListener("click", randomLocation);
+// Random button
+const randomButton = document.getElementById("random-values");
 
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value; // Display the default slider value
+randomButton.addEventListener("click", function() {
 
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-  output.innerHTML = this.value;
-}
+    // Random volume: 1-100
+    volumeSlider.value = Math.floor(Math.random() * 100) + 1;
+
+    // Random pitch: -12 to 12
+    pitchSlider.value = Math.floor(Math.random() * 25) - 12;
+
+    // Random filter: 100-5000
+    filterSlider.value = Math.floor(Math.random() * 4901) + 100;
+
+    // Make the sliders apply the new values
+    volumeSlider.dispatchEvent(new Event("input"));
+    pitchSlider.dispatchEvent(new Event("input"));
+    filterSlider.dispatchEvent(new Event("input"));
+
+});
