@@ -13,6 +13,7 @@
     <script src="https://unpkg.com/tone"></script>
     <script src="main.js" defer></script>
 </head>
+
 <body>
     <dialog id="intro-modal">
         Make sure to adjust your volume settings before playing the synthesiser!
@@ -24,34 +25,44 @@
     </header>
 
     <main>
-    <h3> Notes </h3>
-        <button id="C4" class="whiteKey" data-note="C4">C4</button>
-        <button id="D4" class="whiteKey" data-note="D4">D4</button>
-        <button id="E4" class="whiteKey" data-note="E4">E4</button>
-        <button id="F4" class="whiteKey" data-note="F4">F4</button>
-        <button id="G4" class="whiteKey" data-note="G4">G4</button>
-        <button id="A4" class="whiteKey" data-note="A4">A4</button>
-        <button id="B4" class="whiteKey" data-note="B4">B4</button>
-
-         <!-- random values button -->
-        <button id ="random-values" class="whiteKey">Give me something to work with!</button>
-
-    <h3> Volume</h3>
-        <div class="slidecontainer"> <!--Slider element = https://www.w3schools.com/howto/howto_js_rangeslider.asp-->
-            <input type="range" min="20" max="100" value="50" class="slider" id="myRange">
+    <section class="notes">
+     <h3> Notes </h3>
+        <div class="keys">
+            <button id="C4" class="whiteKey" data-note="C4">C4</button>
+            <button id="D4" class="whiteKey" data-note="D4">D4</button>
+            <button id="E4" class="whiteKey" data-note="E4">E4</button>
+            <button id="F4" class="whiteKey" data-note="F4">F4</button>
+            <button id="G4" class="whiteKey" data-note="G4">G4</button>
+            <button id="A4" class="whiteKey" data-note="A4">A4</button>
+            <button id="B4" class="whiteKey" data-note="B4">B4</button>
         </div>
 
-    <h3>Pitch</h3>
-        <div class="slidecontainer">
-         <input type="range" min="-12" max="12" value="0" class="slider" id="pitchSlider">
+        <button id="random-values" class="whiteKey">
+            Give me something to work with!
+        </button>
+    </section>
+
+
+    <section class="controls">
+
+        <div class="control">
+            <h3>Volume</h3>
+            <input type="range" min="20" max="100" value="50"
+                class="slider" id="myRange">
         </div>
 
-    <h3>Filter</h3>
-        <div class="slidecontainer">
-            <input type="range" min="100" max="5000" value="5000" class="slider" id="filterSlider">
+        <div class="control">
+            <h3>Pitch</h3>
+            <input type="range" min="-12" max="12" value="0"
+                class="slider" id="pitchSlider">
         </div>
 
-    </main>
-           
+        <div class="control">
+            <h3>Filter</h3>
+            <input type="range" min="100" max="5000" value="5000"
+                class="slider" id="filterSlider">
+        </div>
 
-</body>
+    </section>
+
+</main>

@@ -34,6 +34,13 @@ dialog[open] {
     align-items: center;
 }
 
+#intro-modal {
+    background-color: var(--color-01);
+    color: var(--color-02);
+    border: var(--border);
+    padding: 30px;
+}
+
 button {
     border: var(--border);
 }
@@ -47,3 +54,49 @@ button {
 .whiteKey:active {
     background-color: red;
 }
+
+.dropdown {
+  position: relative;
+}
+
+main {
+    max-width: 1000px;
+    margin: 60px auto;
+    text-align: center;
+}
+
+.notes {
+    border: var(--border);
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.keys {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.control {
+    border: var(--border);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.slider {
+    width: 150px;
+}
+
+#random-values {
+    margin-top: 20px;
+}
+
