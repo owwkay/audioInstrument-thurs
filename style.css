@@ -39,11 +39,68 @@ button {
 }
 
 .whiteKey {
+    background-color: white;
+    color: black;
+    border: 3px solid black;
+    padding: 25px 15px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 black;
+}
+
+.whiteKey:hover {
+    background-color: lightgray;
+}
+
+.whiteKey:active {
+    background-color: gray;
+    color: white;
+    box-shadow: 0 2px 0 black;
+    transform: translateY(3px);
+}
+
+.randomButton {
+    background-color: var(--color-04);
+    color: var(--color-01);
+    border: 3px solid var(--color-02);
+    padding: 15px 20px;
+    font-family: 'Fragment Mono', monospace;
     cursor: pointer;
 }
-.whiteKey:hover {
-    background-color: coral;
+
+.randomButton:hover {
+    background-color: var(--color-02);
+    color: var(--color-04);
 }
-.whiteKey:active {
-    background-color: red;
+
+.slidecontainer {
+    padding: 10px;
+}
+
+.slider {
+    appearance: none;
+    width: 250px;
+    height: 10px;
+    background-color: white;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+/* The slider button */
+.slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 30px;
+    background-color: var(--color-02);
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+/* When the user hovers over the slider */
+.slider:hover {
+    background-color: lightgray;
+}
+
+/* When the user clicks the slider */
+.slider::-webkit-slider-thumb:active {
+    background-color: var(--color-04);
 }
