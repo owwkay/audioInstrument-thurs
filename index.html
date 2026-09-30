@@ -24,47 +24,34 @@
     </header>
 
     <main>
+    <h3> Notes </h3>
+        <button id="C4" class="whiteKey" data-note="C4">C4</button>
+        <button id="D4" class="whiteKey" data-note="D4">D4</button>
+        <button id="E4" class="whiteKey" data-note="E4">E4</button>
+        <button id="F4" class="whiteKey" data-note="F4">F4</button>
+        <button id="G4" class="whiteKey" data-note="G4">G4</button>
+        <button id="A4" class="whiteKey" data-note="A4">A4</button>
+        <button id="B4" class="whiteKey" data-note="B4">B4</button>
 
-    <section class="notes">
-        <h3>Notes</h3>
+         <!-- random values button -->
+        <button id ="random-values" class="whiteKey">Give me something to work with!</button>
 
-        <div class="keys">
-            <button id="C4" class="whiteKey" data-note="C4">C4</button>
-            <button id="D4" class="whiteKey" data-note="D4">D4</button>
-            <button id="E4" class="whiteKey" data-note="E4">E4</button>
-            <button id="F4" class="whiteKey" data-note="F4">F4</button>
-            <button id="G4" class="whiteKey" data-note="G4">G4</button>
-            <button id="A4" class="whiteKey" data-note="A4">A4</button>
-            <button id="B4" class="whiteKey" data-note="B4">B4</button>
+    <h3> Volume</h3>
+        <div class="slidecontainer"> <!--Slider element = https://www.w3schools.com/howto/howto_js_rangeslider.asp-->
+            <input type="range" min="20" max="100" value="50" class="slider" id="myRange">
         </div>
 
-        <button id="random-values" class="randomButton">
-            Give me something to work with!
-        </button>
-    </section>
-
- <section class="controls">
-
-        <div class="control">
-            <h3>Volume</h3>
-            <input type="range" min="20" max="100" value="50"
-                class="slider" id="myRange">
+    <h3>Pitch</h3>
+        <div class="slidecontainer">
+         <input type="range" min="-12" max="12" value="0" class="slider" id="pitchSlider">
         </div>
 
-        <div class="control">
-            <h3>Pitch</h3>
-            <input type="range" min="-12" max="12" value="0"
-                class="slider" id="pitchSlider">
+    <h3>Filter</h3>
+        <div class="slidecontainer">
+            <input type="range" min="100" max="5000" value="5000" class="slider" id="filterSlider">
         </div>
 
-        <div class="control">
-            <h3>Filter</h3>
-            <input type="range" min="100" max="5000" value="5000"
-                class="slider" id="filterSlider">
-        </div>
-
-    </section>
-
-</main>
+    </main>
+           
 
 </body>
