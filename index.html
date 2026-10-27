@@ -5,7 +5,7 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Audio Instrument</title>
+    <title>RandomSynth Party</title>
 
     <link rel="reset" href="reset.css">
     <link rel="stylesheet" href="style.css">
@@ -21,34 +21,54 @@
     </dialog>
 
     <header>
-        <h1>RandomSynth</h1>
+        <h1>RandomSynth Party!</h1>
     </header>
 
-    <main>
-    <section class="notes">
-     <h3> Notes </h3>
-        <div class="keys">
-            <button id="C4" class="whiteKey" data-note="C4">C4</button>
-            <button id="D4" class="whiteKey" data-note="D4">D4</button>
-            <button id="E4" class="whiteKey" data-note="E4">E4</button>
-            <button id="F4" class="whiteKey" data-note="F4">F4</button>
-            <button id="G4" class="whiteKey" data-note="G4">G4</button>
-            <button id="A4" class="whiteKey" data-note="A4">A4</button>
-            <button id="B4" class="whiteKey" data-note="B4">B4</button>
+<main>
+    <section class="players">
+        <button id="random-values" class="whiteKey">Give us something to work with!</button>
+        <div>
+                <button id="record-button">Record (10 sec)</button>
+                <button id="play-button">Play sound bite</button>
         </div>
+        <p id="status">Jam together, then press record to save your submission!</p>
+    </section>
 
-        <button id="random-values" class="whiteKey">
-            Give me something to work with!
-        </button>
+    <section class="notes">
+    <h3>Mouse Keys</h3> <!-- One player will control the mouse while the other will control the keyboard, making sure that they can collaborate together in real time -->
+    <div class="keys">
+        <button id="C4" class="whiteKey" data-note="C4">C4</button>
+        <button id="D4" class="whiteKey" data-note="D4">D4</button>
+        <button id="E4" class="whiteKey" data-note="E4">E4</button>
+        <button id="F4" class="whiteKey" data-note="F4">F4</button>
+        <button id="G4" class="whiteKey" data-note="G4">G4</button>
+        <button id="A4" class="whiteKey" data-note="A4">A4</button>
+        <button id="B4" class="whiteKey" data-note="B4">B4</button>
+    </div>
+
+    <h3>Keyboard Keys</h3>
+    <div class="keys">
+        <div class="kbKey" data-key="a">A<br>C5</div>
+        <div class="kbKey" data-key="s">S<br>D5</div>
+        <div class="kbKey" data-key="d">D<br>E5</div>
+        <div class="kbKey" data-key="f">F<br>F5</div>
+        <div class="kbKey" data-key="g">G<br>G5</div>
+        <div class="kbKey" data-key="h">H<br>A5</div>
+        <div class="kbKey" data-key="j">J<br>B5</div>
+    </div>
     </section>
 
 
     <section class="controls">
 
         <div class="control">
-            <h3>Volume</h3>
-            <input type="range" min="20" max="100" value="50"
-                class="slider" id="myRange">
+            <h3>Waveform</h3> <!-- Waveform replaced volume as it provides users with more creative control on how to change their soundbite-->
+            <select id="waveSelect">
+                <option value="sine">Sine</option>
+                <option value="square">Square</option>
+                <option value="sawtooth">Sawtooth</option>
+                <option value="triangle">Triangle</option>
+            </select>
         </div>
 
         <div class="control">
@@ -66,3 +86,5 @@
     </section>
 
 </main>
+</body>
+</html>
