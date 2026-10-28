@@ -1,165 +1,203 @@
-
-// document.body.style.backgroundColor = "red";
-// Getting all key elements by ID
-const C4 = document.getElementById("C4");
-const D4 = document.getElementById("D4");
-const E4 = document.getElementById("E4");
-const F4 = document.getElementById("F4");
-const G4 = document.getElementById("G4");
-const A4 = document.getElementById("A4");
-const B4 = document.getElementById("B4");
-
-// find our intro modal
+////// Modal
 const introModal = document.getElementById("intro-modal");
-// console.log(introModal);
-// find modal close button
 const introModalCloseButton = document.getElementById("intro-modal-close");
 
-// is the mouse button held?
-let mouseButtonDown = false;
-// update our variable based on the mouse being held down
-window.addEventListener("mousedown", function(){
-    mouseButtonDown = true;
-});
-window.addEventListener("mouseup", function(){
-    mouseButtonDown = false;
-});
-
-//introdialog.showModal();
-//document.body.style.backgroundColor = "red";
-
-////// Modal
-// browser loads html > browser loads js > js to open modal > user presses ok on modal > modal closes > audio init
-// user can also close modal with esc key
-// show modal on page load
 introModal.showModal();
-// when ok clicked, close modal
-introModalCloseButton.addEventListener("click", function closeIntroModal(){
-    // close our modal
+introModalCloseButton.addEventListener("click", function () {
+    Tone.start(); // starts the audio system (needs a click to work)
     introModal.close();
 });
-// when dialog closes by whatever means, load audio system
-introModal.addEventListener("close", toneInit);
 
-// introModalCloseButton.addEventListener("click", () => {
-//    introModal.close();
-// });
-
-
-////// Tone
-
-// create instrument
-// change to polysynth
+////// Tone: one synth shared by everyone
 const synth = new Tone.PolySynth();
+const filter = new Tone.Filter(5000, "lowpass");
+synth.connect(filter);
+filter.toDestination();
 
-// Volume slider
-const volumeSlider = document.getElementById("myRange");
-volumeSlider.addEventListener("input", function() {
-    synth.volume.value = this.value - 50;
-});
-
-// Pitch slider
+////// Controls
+const waveSelect = document.getElementById("waveSelect");
 const pitchSlider = document.getElementById("pitchSlider");
-
-pitchSlider.addEventListener("input", function() {
-    synth.set({
-        detune: this.value * 100
-    });
-});
-
-// Filter slider
 const filterSlider = document.getElementById("filterSlider");
 
-filterSlider.addEventListener("input", function() {
+waveSelect.addEventListener("change", function () {
+    synth.set({ oscillator: { type: this.value } });
+});
+
+pitchSlider.addEventListener("input", function () {
+    synth.set({ detune: this.value * 100 });
+});
+
+filterSlider.addEventListener("input", function () {
     filter.frequency.value = this.value;
 });
 
-function toneInit(){
-    // connect synth to audio output
-    synth.connect(Tone.Destination);
-}
-
-function playNote(e){
-    // find the element that the event ran on
-    let keyPressed = e.target;
-    console.log(keyPressed);
-    // find the data-note attribute of that element
-    let note = keyPressed.dataset.note;
-    console.log(note);
-    // play the note for the right amount of time
-    // if mouse button is held previously play note
-    if(e.buttons === 1){
-        synth.triggerAttack(note,);
-    }
-    console.log("shuffled");
-
-}
-
-function endNote(e){
-    // find the element that the event ran on
-    let keyPressed = e.target;
-    console.log(keyPressed);
-    // find the data-note attribute of that element
-    let note = keyPressed.dataset.note;
-    console.log(note);
-    // play the note for the right amount of time
-    synth.triggerRelease(note);
-}
-
-// add event listeners to each key
-C4.addEventListener("mousedown", playNote);
-C4.addEventListener("mouseenter", playNote);
-C4.addEventListener("mouseup", endNote);
-C4.addEventListener("mouseleave", endNote);
-
-D4.addEventListener("mousedown", playNote);
-D4.addEventListener("mouseenter", playNote);
-D4.addEventListener("mouseup", endNote);
-D4.addEventListener("mouseleave", endNote);
-
-E4.addEventListener("mousedown", playNote);
-E4.addEventListener("mouseenter", playNote);
-E4.addEventListener("mouseup", endNote);
-E4.addEventListener("mouseleave", endNote);
-
-F4.addEventListener("mousedown", playNote);
-F4.addEventListener("mouseenter", playNote);
-F4.addEventListener("mouseup", endNote);
-F4.addEventListener("mouseleave", endNote);
-
-G4.addEventListener("mousedown", playNote);
-G4.addEventListener("mouseenter", playNote);
-G4.addEventListener("mouseup", endNote);
-G4.addEventListener("mouseleave", endNote);
-
-A4.addEventListener("mousedown", playNote);
-A4.addEventListener("mouseenter", playNote);
-A4.addEventListener("mouseup", endNote);
-A4.addEventListener("mouseleave", endNote);
-
-B4.addEventListener("mousedown", playNote);
-B4.addEventListener("mouseenter", playNote);
-B4.addEventListener("mouseup", endNote);
-B4.addEventListener("mouseleave", endNote);
-
-
-// Random button
-const randomButton = document.getElementById("random-values");
-
-randomButton.addEventListener("click", function() {
-
-    // Random volume: 1-100
-    volumeSlider.value = Math.floor(Math.random() * 100) + 1;
-
-    // Random pitch: -12 to 12
-    pitchSlider.value = Math.floor(Math.random() * 25) - 12;
-
-    // Random filter: 100-5000
-    filterSlider.value = Math.floor(Math.random() * 4901) + 100;
-
-    // Make the sliders apply the new values
-    volumeSlider.dispatchEvent(new Event("input"));
+// set all three controls at once (used by random + playback)
+function setSettings(wave, pitch, filterValue) {
+    waveSelect.value = wave;
+    pitchSlider.value = pitch;
+    filterSlider.value = filterValue;
+    waveSelect.dispatchEvent(new Event("change"));
     pitchSlider.dispatchEvent(new Event("input"));
     filterSlider.dispatchEvent(new Event("input"));
+}
 
+const waveTypes = ["sine", "square", "sawtooth", "triangle"];
+
+function randomiseSettings() {
+    let wave = waveTypes[Math.floor(Math.random() * waveTypes.length)];
+    let pitch = Math.floor(Math.random() * 25) - 12;
+    let filterValue = Math.floor(Math.random() * 4901) + 100;
+    setSettings(wave, pitch, filterValue);
+}
+
+document.getElementById("random-values").addEventListener("click", randomiseSettings);
+
+////// Recording
+const RECORD_TIME = 10000; // 10 seconds
+
+const recordButton = document.getElementById("record-button");
+const playButton = document.getElementById("play-button");
+const statusText = document.getElementById("status");
+
+let recording = false;
+let recordStart = 0;
+let recordedNotes = [];  // every note either player played
+let heldNotes = {};      // notes currently held down
+let savedSettings = null;
+
+recordButton.addEventListener("click", function () {
+    recording = true;
+    recordStart = Date.now();
+    recordedNotes = [];
+    heldNotes = {};
+    // remember the settings so playback sounds the same
+    savedSettings = {
+        wave: waveSelect.value,
+        pitch: pitchSlider.value,
+        filter: filterSlider.value
+    };
+    recordButton.disabled = true;
+    playButton.disabled = true;
+    statusText.textContent = "Recording... jam together!";
+    setTimeout(stopRecording, RECORD_TIME);
 });
+
+function stopRecording() {
+    // finish any notes still being held
+    for (const note in heldNotes) {
+        recordedNotes.push({ note: note, start: heldNotes[note], end: RECORD_TIME });
+    }
+    heldNotes = {};
+    synth.releaseAll();
+
+    recording = false;
+    recordButton.disabled = false;
+    playButton.disabled = false;
+    statusText.textContent = "Saved! Press play to hear your sound bite.";
+}
+
+playButton.addEventListener("click", function () {
+    if (recordedNotes.length === 0) {
+        statusText.textContent = "Nothing recorded yet!";
+        return;
+    }
+
+    recordButton.disabled = true;
+    playButton.disabled = true;
+    statusText.textContent = "Playing sound bite...";
+
+    // go back to the settings used while recording
+    setSettings(savedSettings.wave, savedSettings.pitch, savedSettings.filter);
+
+    // schedule every recorded note
+    for (const n of recordedNotes) {
+        setTimeout(function () {
+            synth.triggerAttackRelease(n.note, (n.end - n.start) / 1000);
+        }, n.start);
+    }
+
+    setTimeout(function () {
+        recordButton.disabled = false;
+        playButton.disabled = false;
+        statusText.textContent = "Done! Record again or keep jamming.";
+    }, RECORD_TIME);
+});
+
+////// Playing notes (shared by mouse and keyboard)
+function noteDown(note) {
+    synth.triggerAttack(note);
+    if (recording && heldNotes[note] === undefined) {
+        heldNotes[note] = Date.now() - recordStart;
+    }
+}
+
+function noteUp(note) {
+    synth.triggerRelease(note);
+    if (recording && heldNotes[note] !== undefined) {
+        recordedNotes.push({ note: note, start: heldNotes[note], end: Date.now() - recordStart });
+        delete heldNotes[note];
+    }
+}
+
+////// Mouse player
+function mouseDown(e) {
+    // only play if the mouse button is held (so you can slide across keys)
+    if (e.buttons === 1) {
+        noteDown(e.target.dataset.note);
+    }
+}
+
+function mouseUp(e) {
+    noteUp(e.target.dataset.note);
+}
+
+const mouseKeys = document.querySelectorAll("[data-note]");
+mouseKeys.forEach(function (key) {
+    key.addEventListener("mousedown", mouseDown);
+    key.addEventListener("mouseenter", mouseDown);
+    key.addEventListener("mouseup", mouseUp);
+    key.addEventListener("mouseleave", mouseUp);
+});
+
+////// Keyboard player
+const keyMap = {
+    a: "C5",
+    s: "D5",
+    d: "E5",
+    f: "F5",
+    g: "G5",
+    h: "A5",
+    j: "B5"
+};
+
+window.addEventListener("keydown", function (e) {
+    let key = e.key.toLowerCase();
+    let note = keyMap[key];
+    // ignore other keys, held-down repeats, and the intro popup
+    if (note === undefined || e.repeat || introModal.open) return;
+
+    e.preventDefault(); // stops letters changing a focused dropdown
+    noteDown(note);
+    document.querySelector('[data-key="' + key + '"]').classList.add("active");
+});
+
+window.addEventListener("keyup", function (e) {
+    let key = e.key.toLowerCase();
+    let note = keyMap[key];
+    if (note === undefined) return;
+
+    noteUp(note);
+    document.querySelector('[data-key="' + key + '"]').classList.remove("active");
+});
+
+// if the window loses focus while keys are held, stop all sound
+// (otherwise the browser never sees the key being released)
+window.addEventListener("blur", function () {
+    synth.releaseAll();
+    document.querySelectorAll(".kbKey.active").forEach(function (key) {
+        key.classList.remove("active");
+    });
+});
+
+// start with random settings
+randomiseSettings();
