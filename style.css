@@ -6,7 +6,9 @@
     --color-02: darkgreen;
     --color-03: skyblue;
     --color-04: darkblue;
-    --border: 0.5rem inset var(--color-02);
+    --border: 0.4rem inset var(--color-02);
+    --thumb-width: clamp(12px, 1.8vw, 20px);
+    --thumb-height: clamp(20px, 2.8vw, 30px);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,16 +20,29 @@
     }
 }
 
+* {
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Fragment Mono', monospace;
     background-color: var(--color-01);
     color: var(--color-02);
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    margin: 1rem 0 0;
+}
+
+h3 {
+    margin: 0.5rem 0;
 }
 
 dialog[open] {
-    background-color: var(--colour-02);
-    color: var(--colour-01);
+    background-color: var(--color-02);
+    color: var(--color-01);
     border: var(--border);
     display: flex;
     flex-direction: column;
@@ -39,17 +54,49 @@ dialog[open] {
     color: var(--color-02);
     border: var(--border);
     padding: 30px;
+    max-width: 90%;
 }
 
 button {
     border: var(--border);
 }
 
+/* outline so keyboard users can see where they are */
+:focus-visible {
+    outline: 3px solid var(--color-04);
+    outline-offset: 2px;
+}
+
+main {
+    width: min(100% - 1.5rem, 1000px);  /* shrinks with the window */
+    margin: 1rem auto;
+    text-align: center;
+}
+
+.notes {
+    border: var(--border);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.keys {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 0.75rem;
+}
+
+/* start at 4rem wide (no growing), but shrink evenly when space runs out */
+.keys > * {
+    flex: 0 1 4rem;
+    min-width: 0;
+}
+
 .whiteKey {
     background-color: white;
     color: black;
     border: 3px solid black;
-    padding: 25px 15px;
+    padding: 25px 15px;      /* back to your original */
     cursor: pointer;
     box-shadow: 0 5px 0 black;
 }
@@ -65,85 +112,68 @@ button {
     transform: translateY(3px);
 }
 
-.randomButton {
-    background-color: var(--color-04);
-    color: var(--color-01);
-    border: 3px solid var(--color-02);
-    padding: 15px 20px;
-    font-family: 'Fragment Mono', monospace;
-    cursor: pointer;
+/* the keyboard player's on-screen keys (not clickable, they just light up) */
+.kbKey {
+    background-color: white;
+    color: black;
+    border: 3px solid black;
+    padding: 25px 15px;      /* back to your original */
+    box-shadow: 0 5px 0 black;
 }
-
-.randomButton:hover {
-    background-color: var(--color-02);
-    color: var(--color-04);
+.kbKey.active {
+    background-color: gray;
+    color: white;
+    box-shadow: 0 2px 0 black;
+    transform: translateY(3px);
 }
-
-.slidecontainer {
-    padding: 10px;
-}
-
-.dropdown {
-  position: relative;
-}
-
-main {
-    max-width: 1000px;
-    margin: 60px auto;
-    text-align: center;
-}
-
-.notes {
-    border: var(--border);
-    padding: 25px;
-    margin-bottom: 30px;
-}
-
-.keys {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-}
-
+/* three boxes kept side by side as they adjust with the window resizing */
 .controls {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 1rem;
 }
 
 .control {
     border: var(--border);
-    padding: 25px;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-}
-
-.slider {
-    width: 150px;
+    gap: 0.75rem;
+    min-width: 0;      /* lets the box shrink instead of overflowing */
 }
 
 #random-values {
-    margin-top: 20px;
+    margin-top: 0;
 }
 
 .slider {
     appearance: none;
-    width: 250px;
-    height: 10px;
+    width: 100%;
+    max-width: 250px;
+    height: clamp(6px, 0.9vw, 10px);   /* the bar resizes too */
     background-color: white;
     border: 2px solid black;
     cursor: pointer;
 }
 
-/* The slider button */
+/* The slider button (Chrome) */
 .slider::-webkit-slider-thumb {
     appearance: none;
-    width: 20px;
-    height: 30px;
+    width: var(--thumb-width);
+    height: var(--thumb-height);
     background-color: var(--color-02);
     border: 2px solid black;
+    cursor: pointer;
+}
+
+/* The slider button (Firefox) */
+.slider::-moz-range-thumb {
+    width: var(--thumb-width);
+    height: var(--thumb-height);
+    background-color: var(--color-02);
+    border: 2px solid black;
+    border-radius: 0;
     cursor: pointer;
 }
 
@@ -155,4 +185,63 @@ main {
 /* When the user clicks the slider */
 .slider::-webkit-slider-thumb:active {
     background-color: var(--color-04);
+}
+
+.slider::-moz-range-thumb:active {
+    background-color: var(--color-04);
+}
+
+.players { /*Section to separate the instructions/randomiser and record from the rest of the interface */
+    border: var(--border);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.players button {
+    margin: 0.4rem 0.3rem;
+    padding: 0.6rem 1rem;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.players p {
+    margin: 0.5rem 0 0;
+}
+
+select {
+    width: 100%;
+    max-width: 250px;
+    font-family: inherit;
+    padding: 0.5rem;
+    background-color: var(--color-01);
+    color: var(--color-02);
+    border: 3px solid var(--color-02);
+}
+
+/* ===== Screen sizes (Expanded 840px to 1199px uses the styles above) ===== */
+
+/* Medium: under 840px */
+@media (max-width: 839px) {
+    html { font-size: 85%; }
+}
+
+/* Large: 1200px to 1600px */
+@media (min-width: 1200px) and (max-width: 1600px) {
+    html { font-size: 110%; }
+    main { width: min(100% - 1.5rem, 1100px); }
+}
+
+/* Extra-large: over 1600px */
+@media (min-width: 1601px) {
+    html { font-size: 130%; }
+    main { width: min(100% - 1.5rem, 1400px); }
+}
+
+@media (max-width: 839px) {
+    html { font-size: 85%; }
+
+    .whiteKey,
+    .kbKey {
+        padding: 25px 6px;   /* slimmer sides on small windows */
+    }
 }
