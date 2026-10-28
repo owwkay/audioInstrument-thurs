@@ -8,6 +8,35 @@ introModalCloseButton.addEventListener("click", function () {
     introModal.close();
 });
 
+////// Prompts
+const prompts = [
+    "Make a signature sound for a robot!",
+    "Create a theme song for a kids cartoon",
+    "KEYBOARD SMASH!",
+    "Create a spooky ambience for a haunted house",
+    "Make an 8bit style song for an old video game",
+    "Come up with a soundbite for an action movie",
+];
+
+const promptText = document.getElementById("prompt-text");
+const newPromptButton = document.getElementById("new-prompt");
+let lastPrompt = "";
+
+function showNewPrompt() {
+    let prompt = lastPrompt;
+    // keep picking until it's different from the last one
+    while (prompt === lastPrompt) {
+        prompt = prompts[Math.floor(Math.random() * prompts.length)];
+    }
+    lastPrompt = prompt;
+    promptText.textContent = prompt;
+}
+
+newPromptButton.addEventListener("click", showNewPrompt);
+
+// show a prompt as soon as the page loads
+showNewPrompt();
+
 ////// Tone: one synth shared by everyone
 const synth = new Tone.PolySynth();
 const filter = new Tone.Filter(5000, "lowpass");
