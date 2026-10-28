@@ -57,6 +57,24 @@ dialog[open] {
     max-width: 90%;
 }
 
+
+.prompt {
+    border: var(--border);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+#prompt-text {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.prompt button {
+    font-family: inherit;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
 button {
     border: var(--border);
 }
